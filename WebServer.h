@@ -29,9 +29,12 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <Ethernet.h>
-#include <EthernetClient.h>
-#include <EthernetServer.h>
+// #include <Ethernet.h>
+// #include <EthernetClient.h>
+// #include <EthernetServer.h>
+#include <LWiFi.h>
+#include <LWiFiServer.h>
+#include <LWiFiClient.h>
 
 /********************************************************************
  * CONFIGURATION
@@ -316,8 +319,8 @@ public:
   // Close the current connection and flush ethernet buffers
   void reset(); 
 private:
-  EthernetServer m_server;
-  EthernetClient m_client;
+  LWiFiServer m_server(80);
+  LWiFiClient m_client;
   const char *m_urlPrefix;
 
   unsigned char m_pushback[32];
