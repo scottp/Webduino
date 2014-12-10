@@ -2,6 +2,19 @@
 
 This is an Arduino-based Web Server library, originally developed for a class at NYC Resistor. It's called Webduino, and it's an extensible web server library for the Arduino using the Wiznet-based Ethernet shields. It's released under the MIT license allowing all sorts of reuse.
 
+# Scott's Version
+
+This is a temporary version - where I can get this going on a LinkIt One then
+try and push the changes back upstream. 
+
+For the origianl and working version see - https://github.com/sirleech/Webduino
+
+TODO:
+- Support non Ethernet libraries, e.g. WiFiServer / Client
+- Look at providing the Server / Client as paramters in (streams)
+- Look at documenting PROGMEM usage, e.g. using inline e.g. client.print(F("..."));-
+- Look at standard method of defining AJAX/REST calls
+
 ## Features
 
 - URL parameter parsing
