@@ -587,15 +587,15 @@ void WebServer::processConnection(char *buff, int *bufflen)
     buff[0] = 0;
     ConnectionType requestType = INVALID;
 #if WEBDUINO_SERIAL_DEBUGGING > 1
-    Serial.println("*** checking request ***");
+    Serial.println(F("*** checking request ***"));
 #endif
     getRequest(requestType, buff, bufflen);
 #if WEBDUINO_SERIAL_DEBUGGING > 1
-    Serial.print("*** requestType = ");
+    Serial.print(F("*** requestType = "));
     Serial.print((int)requestType);
-    Serial.print(", request = \"");
+    Serial.print(F(", request = \""));
     Serial.print(buff);
-    Serial.println("\" ***");
+    Serial.println(F("\") ***");
 #endif
 
     // don't even look further at invalid requests.
@@ -607,7 +607,7 @@ void WebServer::processConnection(char *buff, int *bufflen)
     {
       processHeaders();
 #if WEBDUINO_SERIAL_DEBUGGING > 1
-      Serial.println("*** headers complete ***");
+      Serial.println(F("*** headers complete ***"));
 #endif
 
       if (strcmp(buff, "/robots.txt") == 0)
@@ -635,7 +635,7 @@ void WebServer::processConnection(char *buff, int *bufflen)
     flushBuf();
 
 #if WEBDUINO_SERIAL_DEBUGGING > 1
-    Serial.println("*** stopping connection ***");
+    Serial.println(F("*** stopping connection ***"));
 #endif
     reset();
   }
@@ -686,6 +686,7 @@ void WebServer::noRobots(ConnectionType type)
 
 void WebServer::favicon(ConnectionType type)
 {
+	// XXX string space?
   httpSuccess("image/x-icon","Cache-Control: max-age=31536000\r\n");
   if (type != HEAD)
   {
@@ -802,7 +803,7 @@ int WebServer::read()
         if (m_contentLength == 0)
         {
 #if WEBDUINO_SERIAL_DEBUGGING > 1
-          Serial.println("\n*** End of content, terminating connection");
+          Serial.println(F("\n*** End of content, terminating connection"));
 #endif
           return -1;
         }
@@ -822,9 +823,9 @@ int WebServer::read()
 
 #if WEBDUINO_SERIAL_DEBUGGING
         if (ch == '\r')
-          Serial.print("<CR>");
+          Serial.print(F("<CR>"));
         else if (ch == '\n')
-          Serial.println("<LF>");
+          Serial.println(F("<LF>"));
         else
           Serial.print((char)ch);
 #endif
@@ -837,7 +838,7 @@ int WebServer::read()
         {
           // connection timed out, destroy client, return EOF
 #if WEBDUINO_SERIAL_DEBUGGING
-          Serial.println("*** Connection timed out");
+          Serial.println(F("*** Connection timed out"));
 #endif
           reset();
           return -1;
@@ -847,7 +848,7 @@ int WebServer::read()
 
     // connection lost, return EOF
 #if WEBDUINO_SERIAL_DEBUGGING
-    Serial.println("*** Connection lost");
+    Serial.println(F("*** Connection lost"));
 #endif
     return -1;
   }
@@ -1241,9 +1242,9 @@ void WebServer::processHeaders()
     {
       readInt(m_contentLength);
 #if WEBDUINO_SERIAL_DEBUGGING > 1
-      Serial.print("\n*** got Content-Length of ");
+      Serial.print(F("\n*** got Content-Length of "));
       Serial.print(m_contentLength);
-      Serial.print(" ***");
+      Serial.print(F(" ***"));
 #endif
       continue;
     }
@@ -1252,9 +1253,9 @@ void WebServer::processHeaders()
     {
       readHeader(m_authCredentials,51);
 #if WEBDUINO_SERIAL_DEBUGGING > 1
-      Serial.print("\n*** got Authorization: of ");
+      Serial.print(F("\n*** got Authorization: of "));
       Serial.print(m_authCredentials);
-      Serial.print(" ***");
+      Serial.print(F(" ***"));
 #endif
       continue;
     }
