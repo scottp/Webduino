@@ -36,6 +36,10 @@
 #include <LWiFiServer.h>
 #include <LWiFiClient.h>
 
+#define WIFI_AP "your_ap_ssid"
+#define WIFI_PASSWORD "your_password"
+#define WIFI_AUTH LWIFI_WEP  // choose from LWIFI_OPEN, LWIFI_WPA, or LWIFI_WEP according to your WiFi AP configuration
+
 /********************************************************************
  * CONFIGURATION
  ********************************************************************/
@@ -385,6 +389,11 @@ P(webServerHeader) = "Server: Webduino/" WEBDUINO_VERSION_STRING CRLF;
 void WebServer::begin()
 {
   m_server.begin();
+  // keep retrying until connected to AP
+  Serial.println("Connecting to AP");
+  while (0 == LWiFi.connect(WIFI_AP, LWiFiLoginInfo(WIFI_AUTH, WIFI_PASSWORD))) {
+    delay(1000);
+  }
 }
 
 void WebServer::setDefaultCommand(Command *cmd)
